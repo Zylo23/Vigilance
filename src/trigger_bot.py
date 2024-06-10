@@ -36,7 +36,7 @@ class TriggerBot:
         self.last_reaction = 0
         self.setup_keys()
         self.print_state()
-        Beep(750, 100)
+        Beep(500, 100)
 
     def setup_keys(self) -> None:
         add_hotkey(self.config['toggle_key'], self.toggle_state)
@@ -48,7 +48,7 @@ class TriggerBot:
             Beep(1000, 100)
             Beep(1000, 100)
         else:
-            Beep(500, 100)
+            Beep(750, 100)
         self.print_state()
 
     def switch_mods(self) -> None:
@@ -65,22 +65,17 @@ class TriggerBot:
                     blue - green >= 0x32 and
                     red >= 0x69 and
                     blue >= 0x69)
-        
         return abs(red - blue) <= 0xD and red - green >= 0x3C and blue - green >= 0x3C and red >= 0x6E and blue >= 0x64
 
     def grab(self) -> Image:
         with mss() as sct:
-            bbox = (int(S_HEIGHT / 2 - ZONE),
-                    int(S_WIDTH / 2 - ZONE),
-                    int(S_HEIGHT / 2 + ZONE),
-                    int(S_WIDTH / 2 + ZONE))
+            bbox = (S_HEIGHT // 2 - ZONE, S_WIDTH // 2 - ZONE, S_HEIGHT // 2 + ZONE, S_WIDTH // 2 + ZONE)
             sct_img = sct.grab(bbox)
             return Image.frombytes('RGB', sct_img.size, sct_img.bgra, 'raw', 'BGRX')
 
     def scan(self) -> None:
         start_time = perf_counter()
         pmap = self.grab()
-
         try:
             for x in range(0, ZONE * 2):
                 for y in range(0, ZONE * 2):
@@ -98,20 +93,21 @@ class TriggerBot:
     def print_state(self) -> None:
         status = 'Active' if self.is_running else 'Inactive'
         status_color = Fore.GREEN if self.is_running else Fore.RED
-        
-        s = f"{Style.BRIGHT}{Fore.BLUE}Vigilance {__version__} | By {__author__}{Style.RESET_ALL}\n"
-        s += f"{Style.BRIGHT}{Fore.GREEN}=== Controls{Style.RESET_ALL}\n"
-        s += f"Trigger Key           : {Fore.CYAN}{self.config['toggle_key']}{Style.RESET_ALL}\n"
-        s += f"Switch Mode Key       : {Fore.CYAN}{SWITCH_MODS_KEY}{Style.RESET_ALL}\n\n"
-        s += f"{Style.BRIGHT}{Fore.GREEN}=== Status{Style.RESET_ALL}\n"
-        s += f"Mode                  : {Fore.MAGENTA}{MODES[self.mode][0]}{Style.RESET_ALL}\n"
-        s += f"Grab Zone             : {Fore.MAGENTA}{ZONE}x{ZONE}{Style.RESET_ALL}\n"
-        s += f"Is Running            : {status_color}{status}{Style.RESET_ALL}\n"
-        s += f"Last Reaction         : {Fore.MAGENTA}{self.last_reaction} ms"
-        s += f"({self.last_reaction / (ZONE * ZONE):.2f} ms/pix){Style.RESET_ALL}\n"
+        state = (
+            f"{Style.BRIGHT}{Fore.BLUE}Vigilance {__version__} | By {__author__}{Style.RESET_ALL}\n\n"
+            f"{Style.BRIGHT}{Fore.GREEN}=== Controls{Style.RESET_ALL}\n"
+            f"Trigger Key           : {Fore.CYAN}{self.config['toggle_key']}{Style.RESET_ALL}\n"
+            f"Switch Mode Key       : {Fore.CYAN}{SWITCH_MODS_KEY}{Style.RESET_ALL}\n\n"
+            f"{Style.BRIGHT}{Fore.GREEN}=== Status{Style.RESET_ALL}\n"
+            f"Mode                  : {Fore.MAGENTA}{MODES[self.mode][0]}{Style.RESET_ALL}\n"
+            f"Grab Zone             : {Fore.MAGENTA}{ZONE}x{ZONE}{Style.RESET_ALL}\n"
+            f"Is Running            : {status_color}{status}{Style.RESET_ALL}\n"
+            f"Last Reaction         : {Fore.MAGENTA}{self.last_reaction} ms"
+            f"({self.last_reaction / (ZONE * ZONE):.2f} ms/pix){Style.RESET_ALL}\n"
+        )
         system('cls')
-        print(s)
-        
+        print(state)
+
     def run(self) -> None:
         while True:
             if self.is_running:
