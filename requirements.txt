@@ -1,0 +1,7 @@
+colorama
+mss
+pillow
+pyyaml
+keyboard
+numpy
+mouse
