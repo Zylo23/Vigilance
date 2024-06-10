@@ -1,5 +1,6 @@
 from yaml import safe_load, dump
 
+
 class Config:
     @staticmethod
     def load_config() -> dict:

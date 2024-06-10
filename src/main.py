@@ -3,9 +3,8 @@ from trigger_bot import TriggerBot
 from colorama import init
 from hashlib import sha256
 from random import random
+from version import __version__
 
-__author__ = 'Zylo23'
-__version__ = 'v0.0.1'
 
 def main():
     init()
@@ -15,6 +14,7 @@ def main():
 
     config = Config.load_config()
     TriggerBot(config).run()
+
     
 if __name__ == '__main__':
     main()
