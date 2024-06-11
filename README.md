@@ -20,7 +20,7 @@ Vigilance is an advanced trigger bot for detecting and responding to specific co
 
 - Detects specific color patterns on the screen
 - Supports multiple detection modes with configurable delay
-- Hotkey support for toggling bot state and switching modes
+- Hotkey support for toggling bot state, switching modes, and adjusting detection zone size
 - Visual and audio feedback for status changes
 
 ## Installation
@@ -49,13 +49,12 @@ Ensure you have Python installed. This project uses Python 3.7 or higher.
 The required Python packages are listed in `requirements.txt`:
 
 ```
-colorama
-mss
-pillow
-pyyaml
-keyboard
-numpy
-mouse
+colorama==0.4.6
+keyboard==0.13.5
+mouse==0.7.1
+mss==9.0.1
+Pillow==10.3.0
+PyYAML==6.0.1
 ```
 
 ## Usage
@@ -72,16 +71,35 @@ mouse
 
 - `Insert`: Toggle the bot's active state
 - `Ctrl + Tab`: Switch detection modes
+- `Ctrl + Up`: Increase detection zone size
+- `Ctrl + Down`: Decrease detection zone size
 
 ## Configuration
 
-The configuration file `config.yaml` will be created automatically if it does not exist. You can modify the keys for toggling the bot and switching modes.
+The configuration file `config.yaml` will be created automatically if it does not exist. You can modify the keys for toggling the bot, switching modes, and adjusting the detection zone size.
 
 Default configuration:
 
 ```yaml
 hold_key: 'shift'
 toggle_key: 'insert'
+switch_mode_key: 'ctrl + tab'
+increase_zone_key: 'ctrl + up'
+decrease_zone_key: 'ctrl + down'
+zone_size: 5
+modes:
+  - name: '0.3s Delayer'
+    delay: 0.3
+  - name: '0.25s Delayer'
+    delay: 0.25
+  - name: '0.2s Delayer'
+    delay: 0.2
+  - name: '0.15s Delayer'
+    delay: 0.15
+  - name: '0.1s Delayer'
+    delay: 0.1
+  - name: 'No Delay Full-Auto'
+    delay: 0
 ```
 
 ## License

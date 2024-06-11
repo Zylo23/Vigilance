@@ -4,4 +4,3 @@ mouse==0.7.1
 mss==9.0.1
 Pillow==10.3.0
 PyYAML==6.0.1
-PyYAML==6.0.1
