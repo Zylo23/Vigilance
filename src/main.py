@@ -1,3 +1,4 @@
+
 from config import Config
 from trigger_bot import TriggerBot
 from colorama import init, Fore, Style
