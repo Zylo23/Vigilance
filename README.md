@@ -34,7 +34,7 @@ Ensure you have Python installed. This project uses Python 3.7 or higher.
 1. Clone the repository:
 
     ```sh
-    git clone https://github.com/Zylo23/Vigilance.git
+    git clone https://github.com/pyyupsk/Vigilance.git
     cd Vigilance
     ```
 
@@ -108,6 +108,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-Developed by [Zylo23](https://github.com/Zylo23)
+Developed by [pyyupsk](https://github.com/pyyupsk)
 
 Feel free to contribute to this project by submitting issues or pull requests.
